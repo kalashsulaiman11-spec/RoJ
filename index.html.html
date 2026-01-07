@@ -1,0 +1,542 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<title>Dashboard منسق</title>
+
+<style>
+* { box-sizing: border-box; }
+body { margin:0; font-family: Arial, sans-serif; background:#f4f6f9; }
+
+/* ===== DASHBOARD ===== */
+.dashboard { display:flex; min-height:100vh; flex-direction:row-reverse; }
+
+/* ===== SIDEBAR ===== */
+.sidebar {
+  width:230px;
+  background:#155fc0;
+  color:white;
+  padding-top:120px;
+  position:relative;
+}
+.sidebar a {
+  display:block;
+  color:white;
+  text-decoration:none;
+  padding:12px;
+  margin-bottom:10px;
+  border-radius:6px;
+  cursor:pointer;
+}
+.sidebar a:hover, .sidebar a.active { background:#328fe6; }
+
+/* ===== LOGO ===== */
+.logo {
+  position:absolute;
+  top:15px;
+  right:50%;
+  transform:translateX(50%);
+  width:80px;
+  height:80px;
+  border-radius:50%;
+  overflow:hidden;
+  border:3px solid rgb(8, 8, 141);
+  
+}
+.logo img { width:100%; height:100%; object-fit:cover; }
+
+/* ===== CONTENT ===== */
+.content { flex:1; padding:40px; }
+.page { display:none; }
+.page.active { display:block; }
+
+/* ===== HERO ===== */
+.hero {
+  position: relative;
+  height: 80vh;
+  background: url("images/img.jpg") center/cover no-repeat;
+  border-radius: 15px;
+  overflow: hidden;
+  margin-bottom: 40px;
+}
+.hero-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.6);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  color: #fff;
+  padding: 30px;
+}
+.hero-overlay h1 { font-size: 42px; margin-bottom: 15px; }
+.hero-overlay p { font-size: 18px; max-width: 700px; line-height: 1.8; }
+.hero-buttons { margin-top: 25px; display: flex; gap: 15px; flex-wrap: wrap; }
+.hero-buttons button {
+  padding: 12px 22px;
+  font-size: 16px;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  background: #155fc0;
+  color: white;
+}
+
+/* ===== CARDS ===== */
+.cards, .container_card {
+  display:flex;
+  flex-wrap:wrap;
+  gap:30px;
+  justify-content:center;
+}
+.card {
+  width:250px;
+  background:white;
+  padding:15px;
+  border-radius:10px;
+  box-shadow:0 3px 10px rgba(0,0,0,.15);
+  text-align:center;
+}
+.card img {
+  width:100%;
+  height:150px;
+  object-fit:cover;
+  border-radius:8px;
+}
+
+/* ===== TABLE ===== */
+.table-card {
+  background:white;
+  padding:20px;
+  border-radius:10px;
+  box-shadow:0 3px 10px rgba(0,0,0,.15);
+  overflow-x:auto;
+}
+table { width:100%; border-collapse:collapse; }
+th, td { padding:12px; border:1px solid #ccc; text-align:center; }
+th { background:#155fc0; color:white; }
+
+/* ===== STATUS ===== */
+.btn { padding:8px 14px; border:none; border-radius:6px; cursor:pointer; color:white; }
+.active-btn { background:#28a745; }
+.inactive-btn { background:#dc3545; }
+.status.active { color:#28a745; font-weight:bold; }
+.status.inactive { color:#dc3545; font-weight:bold; }
+
+/* ===== FORM ===== */
+#settings form {
+  max-width:500px;
+  margin:0 auto;
+  background:white;
+  padding:30px;
+  border-radius:10px;
+  box-shadow:0 3px 15px rgba(0,0,0,.2);
+}
+input, select, input[type="submit"] {
+  width:100%;
+  padding:15px;
+  margin-bottom:20px;
+  border-radius:8px;
+  border:1px solid #ccc;
+  text-align: right;
+}
+input[type="submit"] {
+  background:#155fc0;
+  color:white;
+  cursor:pointer;
+}
+
+/* ===== CONTACT ===== */
+.contact-box {
+  background:white;
+  padding:40px;
+  border-radius:12px;
+  box-shadow:0 3px 15px rgba(0,0,0,.15);
+  max-width:700px;
+  margin:0 auto;
+  text-align:center;
+}
+.contact-links {
+  display:flex;
+  justify-content:center;
+  gap:10px;
+  margin-top:20px;
+  flex-wrap:wrap;
+}
+.contact-links a {
+  width:50px;
+  height:50px;
+  border-radius:50%;
+  overflow:hidden;
+  background:#155fc0;
+}
+.contact-links img {
+  width:100%;
+  height:100%;
+  object-fit:cover;
+}
+.contact-footer {
+  margin-top:40px;
+  padding-top:15px;
+  border-top:1px solid #ddd;
+  font-size:14px;
+  color:#555;
+}
+.contact-links img:hover
+{
+   transform: scale(1.2);
+   
+}
+.contact-links {
+  display: flex;
+  gap: 15px; /* مسافة بين الأيقونات */
+}
+
+.contact-links a img {
+  width: 50px;          /* حجم الصورة الأساسي */
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  background-size: cover;
+}
+
+.contact-links a:hover img {
+  transform: scale(1.1);   /* تكبير خفيف */
+  box-shadow: 0 6px 15px rgba(0,0,0,0.25);
+  
+}
+/* ----------------------------------------------------------------------------------- */
+
+body{
+  margin:0;
+  background:#f4f6f9;
+}
+
+/* ===== DASHBOARD ===== */
+.dashboard{
+  display:flex;
+  min-height:100vh;
+  flex-direction:row; /* sidebar يمين */
+}
+
+/* ===== SIDEBAR ===== */
+.sidebar{
+  width:230px;
+  background:#0a45a5;
+  position:fixed;
+  right:0;
+  top:0;
+  height:100vh;
+  padding-top:20px;
+}
+
+.sidebar .logo{
+  text-align:center;
+  margin-bottom:30px;
+  
+
+}
+
+.sidebar .logo img{
+  width:80px;
+  border-radius:50%;
+}
+
+.sidebar a{
+  display:block;
+  padding:15px;
+  color:#fff;
+  text-decoration:none;
+  transition:0.3s;
+  cursor:pointer;
+ 
+  
+}
+
+.sidebar a:hover,
+.sidebar a.active{
+  background:#334155;
+ 
+}
+
+
+/* ===== CONTENT ===== */
+.content{
+  margin-right:230px;
+  padding:20px;
+  width:100%;
+}
+
+/* ===== PAGES ===== */
+.page{
+  display:none;
+}
+
+.page.active{
+  display:block;
+  
+}
+
+/* ----------- */
+
+/* ===== SIDEBAR ===== */
+.sidebar{
+  width:230px;
+  background:#0a45a5;
+  position:fixed;
+  right:0;
+  top:0;
+  height:100vh;
+  padding-top:20px;
+}
+
+/* ===== LOGO ===== */
+.sidebar .logo{
+  text-align:center;
+  margin-bottom:60px; /* زيادة المسافة بين اللوغو وروابط الصفحات */
+  width: 100px;
+  height: 100px;
+}
+
+.sidebar .logo img{
+  width:100px;
+  border-radius:50%;
+}
+
+/* ===== SIDEBAR LINKS ===== */
+.sidebar a{
+  display:block;
+  padding:15px;
+  color:#fff;
+  text-decoration:none;
+  transition:0.3s;
+  cursor:pointer;
+}
+
+.sidebar a:hover,
+.sidebar a.active{
+  background:#334155;
+}
+#href
+{
+  margin-top: 120px;
+}
+
+
+</style>
+</head>
+
+<body>
+<div class="dashboard">
+
+<!-- SIDEBAR -->
+<!--انشاء روابط في داشبورد-->
+<div class="sidebar">
+  <div class="logo"><img src="images/logo.jpg"></div>
+  <a class="active" onclick="showPage('home',this)" id="href">الرئيسية</a>
+  <a onclick="showPage('courses',this)">الكورسات</a>
+  <a onclick="showPage('trainers',this)">المدربون</a>
+  <a onclick="showPage('students',this)">الطلاب</a>
+  <a onclick="showPage('settings',this)">التسجيل</a>
+  <a onclick="showPage('contact',this)">تواصل معنا</a>
+</div>
+
+<div class="content">
+
+<!-- HOME -->
+<div id="home" class="page active">
+  <div class="hero">
+    <div class="hero-overlay">
+      <h1>Bajar Center</h1>
+      <p>
+        مركز التدريب الطلابي هو مركز متخصص لتقديم دورات تدريبية
+        تؤهلك لسوق العمل وتطور مهاراتك الأكاديمية والمهنية.
+      </p>
+      <div class="hero-buttons">
+        <!--انشاء ازرار جميع الصفحات في صفحة رئيسية-->
+        <button onclick="showPage('courses',document.querySelectorAll('.sidebar a')[1])">عرض الكورسات</button>
+        <button onclick="showPage('trainers',document.querySelectorAll('.sidebar a')[2])"> المدربون</button>
+        <button onclick="showPage('contact',document.querySelectorAll('.sidebar a')[5])">تواصل معنا</button>
+        <button onclick="showPage('settings',document.querySelectorAll('.sidebar a')[4])">سجل الآن</button>
+      </div>
+    </div>
+  </div>
+
+  <h2>عن المركز</h2>
+  <p>مركز التدريب الطلابي هو مركز متخصص لتقديم دورات تدريبية للطلاب في مختلف المجالات التعليمية والمهنية.</p>
+
+  <h3>رسالتنا</h3>
+  <p>تطوير مهارات الطلاب وتعزيز قدراتهم للوصول إلى التفوق الأكاديمي والمهني.</p>
+
+  <h3>رؤيتنا</h3>
+  <p>أن نكون المركز الأول في تقديم التدريب الأكاديمي والمهني في المنطقة.</p>
+
+  <h3>أهدافنا</h3>
+  <ul>
+    <li>تقديم برامج تدريبية عملية ومبتكرة</li>
+    <li>توفير بيئة تعليمية محفزة وآمنة</li>
+    <li>تمكين الطلاب من مهارات سوق العمل</li>
+    <li>تحفيز التعلم المستمر</li>
+  </ul>
+</div>
+
+<!-- COURSES -->
+<div id="courses" class="page">
+<h1 align="center">الكورسات</h1>
+<div class="cards">
+<div class="card"><img src="images/computer.jfif"><h3>Computer</h3></div>
+<div class="card"><img src="images/english.jfif"><h3>English</h3></div>
+<div class="card"><img src="images/web.jfif"><h3>Web Design</h3></div>
+<div class="card"><img src="images/back.jfif"><h3>Backend</h3></div>
+<div class="card"><img src="images/music.png"><h3>Music</h3></div>
+<div class="card"><img src="images/mental_math.jfif"><h3>Mental Math</h3></div>
+<div class="card"><img src="images/art.jpg"><h3>Art</h3></div>
+<div class="card"><img src="images/design.jfif"><h3>Design</h3></div>
+<div class="card"><img src="images/Autocad.jfif"><h3>AutoCAD</h3></div>
+</div>
+</div>
+
+<!-- TRAINERS -->
+<div id="trainers" class="page">
+<h1 align="center">المدربون</h1>
+<div class="container_card">
+<div class="card"><h3>أحمد علي</h3><p>Computer</p></div>
+<div class="card"><h3>سارة محمد</h3><p>English</p></div>
+<div class="card"><h3>يوسف خالد</h3><p>Web</p></div>
+<div class="card"><h3>ليلى سمير</h3><p>Backend</p></div>
+<div class="card"><h3>منى ياسر</h3><p> Mental Math</p></div>
+<div class="card"><h3>يارا حسين</h3><p>AutoCAD</p></div>
+<div class="card"><h3>حسن عصام </h3><p>Design</p></div>
+<div class="card"><h3> خليل عمر </h3><p>Music</p></div>
+<div class="card"><h3> حنان حسين </h3><p>Art</p></div>
+</div>
+</div>
+
+<!-- STUDENTS -->
+<div id="students" class="page">
+<h1 align="center">الطلاب</h1>
+<div class="table-card">
+<table>
+<!--  // تغير حالة الطالب عند الضغط على زر و تغير نص الحالة مع الزر-->
+<tr><th>الاسم</th><th>الكورس</th><th>الحالة</th><th>تحكم</th></tr>
+<tr><td>أحمد</td><td>Web</td><td class="status active">نشط</td><td><button class="btn active-btn" onclick="toggleStatus(this)">نشط</button></td></tr>
+<tr><td>سارة</td><td>English</td><td class="status inactive">غير نشط</td><td><button class="btn inactive-btn" onclick="toggleStatus(this)">غير نشط</button></td></tr>
+<tr><td>محمد</td><td>Computer</td><td class="status active">نشط</td><td><button class="btn active-btn" onclick="toggleStatus(this)">نشط</button></td></tr>
+<tr><td>ليلى</td><td>Art</td><td class="status active">نشط</td><td><button class="btn active-btn" onclick="toggleStatus(this)">نشط</button></td></tr>
+<tr><td>نور</td><td>Back_end</td><td class="status inactive">غير نشط</td><td><button class="btn inactive-btn" onclick="toggleStatus(this)">غير نشط</button></td></tr>
+<tr><td>منى</td><td>Mental Math</td><td class="status inactive">غير نشط</td><td><button class="btn inactive-btn" onclick="toggleStatus(this)">غير نشط</button></td></tr>
+<tr><td>نور</td><td>Autocat</td><td class="status inactive">غير نشط</td><td><button class="btn inactive-btn" onclick="toggleStatus(this)">غير نشط</button></td></tr>
+<tr><td>عمر</td><td>Music</td><td class="status inactive">غير نشط</td><td><button class="btn inactive-btn" onclick="toggleStatus(this)">غير نشط</button></td></tr>
+<tr><td>أنس</td><td>Design</td><td class="status inactive">غير نشط</td><td><button class="btn inactive-btn" onclick="toggleStatus(this)">غير نشط</button></td></tr>
+<tr><td>يوسف</td><td>English</td><td class="status inactive">غير نشط</td><td><button class="btn inactive-btn" onclick="toggleStatus(this)">غير نشط</button></td></tr>
+<tr><td>باسل</td><td>Design</td><td class="status inactive">غير نشط</td><td><button class="btn inactive-btn" onclick="toggleStatus(this)">غير نشط</button></td></tr>
+<tr><td>مروة</td><td>computer</td><td class="status inactive">غير نشط</td><td><button class="btn inactive-btn" onclick="toggleStatus(this)">غير نشط</button></td></tr>
+</table>
+</div>
+</div>
+
+<!-- REGISTRATION -->
+<div id="settings" class="page">
+<h1 align="center">التسجيل</h1>
+<form id="registerForm">
+<input type="text" placeholder="الاسم الثلاثي" required>
+<input type="password" placeholder="ادخل كلمة المرور" required>
+<input type="email" placeholder="البريد" required>
+<input type="tel" placeholder="الهاتف" required>
+<input type="number" placeholder="العمر" required>
+<select required>
+<option disabled selected>اختر المادة</option>
+<option>English</option>
+<option>Computer</option>
+<option>Web_Design</option>
+<option>Music</option>
+<option>Art</option>
+<option>AutoCAD</option>
+<option>Back_end</option>
+<option>Design</option>
+<option>Mental Math</option>
+</select>
+<input type="submit" value="تسجيل">
+</form>
+</div>
+
+<!-- CONTACT -->
+<div id="contact" class="page">
+<h1 align="center">تواصل معنا</h1>
+<div class="contact-box">
+<p><strong>الهاتف:</strong> 07700000000</p>
+<p><strong>البريد:</strong> trainingcenter@example.com</p>
+<p><strong>العنوان:</strong> شارع كورنيش - خلف مطعم أبو طارق الجديد</p>
+
+<h3>ساعات العمل</h3>
+<p>السبت – الخميس: 9 صباحاً – 8 مساءً</p>
+<p>الجمعة: عطلة</p>
+
+<div class="contact-links">
+<a href="https://www.facebook.com" target="_blank"><img src="images/facebook.png"></a>
+<a href="https://www.instagram.com/bajarcenter/" target="_blank"><img src="images/instagram.jfif"></a>
+<a href="https://www.twitter.com" target="_blank"><img src="images/twitter.png"></a>
+<a href="https://t.me/yourchannel" target="_blank"><img src="images/telegram.png"></a>
+</div>
+
+
+
+<div class="contact-footer">© جميع الحقوق محفوظة 2025</div>
+</div>
+</div>
+
+</div>
+</div>
+
+<script>
+  // تغير حالة الطالب عند الضغط على زر و تغير نص الحالة مع الزر
+function showPage(id, el){
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  document.querySelectorAll('.sidebar a').forEach(a=>a.classList.remove('active'));
+  el.classList.add('active');
+}
+function toggleStatus(btn){
+  const row = btn.parentElement.parentElement;
+  const status = row.querySelector('.status');
+  if(status.classList.contains('active')){
+    status.className='status inactive';
+    status.textContent='غير نشط';
+    btn.className='btn inactive-btn';
+    btn.textContent='غير نشط';
+  } else {
+    status.className='status active';
+    status.textContent='نشط';
+    btn.className='btn active-btn';
+    btn.textContent='نشط'; 
+  }
+}
+
+document.getElementById("registerForm").addEventListener("submit", function(e) {
+    e.preventDefault(); // منع إعادة تحميل الصفحة
+    alert("تم التسجيل بنجاح ✅"); // ظهور اشعار ان تم تسجيل عند الضغط على زر تسجيل
+    this.reset(); // تفريغ الحقول بعد التسجيل (اختياري)
+});
+
+</script>
+
+
+<!-- ---------------------------->
+<!--كود لربط رابط بصفحة لوغين بصفحة داشبورد قسم تسجيل-->
+<script>
+window.addEventListener("load", function () {
+  const hash = window.location.hash.replace("#", "");
+  if (!hash) return;
+
+  const links = document.querySelectorAll(".sidebar a");
+  links.forEach(link => {
+    if (link.getAttribute("onclick")?.includes(hash)) {
+      showPage(hash, link);
+    }
+  });
+});
+</script>
+
+
+</body>
+</html>
